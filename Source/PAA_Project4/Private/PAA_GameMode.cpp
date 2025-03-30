@@ -627,7 +627,7 @@ void APAA_GameMode::CoinFlip()
         DebugLog(TEXT("Il giocatore posiziona per primo."), FColor::Green, 5.f);
         HUDGame->SetExecutionText("", "HP WON THE COIN FLIP.", "");
         HUDGame->SetExecutionText("", "HP PLACES FIRST.", "");
-
+        HUDGame->SetExecutionText("", "SPAWN YOUR SNIPER.", "");
     }
     else
     {
@@ -692,12 +692,12 @@ void APAA_GameMode::SpawnUnit(TSubclassOf<AUnit> UnitClass, FVector2D GridPositi
     }
 }
 
-
 // Gestisce il posizionamento delle unità da parte del giocatore durante la fase di placement
 void APAA_GameMode::OnPlaceUnit()
 {
     // Controlla se siamo nella fase di placement e se è il turno del giocatore
     if (CurrentPhase != EGamePhase::Placement || !bIsPlayerTurn) return;
+
 
     // Ottieni il controller del giocatore
     APlayerController* PC = UGameplayStatics::GetPlayerController(this, 0);
@@ -764,6 +764,7 @@ void APAA_GameMode::OnPlaceUnit()
 
 void APAA_GameMode::SimulateAIPlacement()
 {
+
     if (CurrentPhase != EGamePhase::Placement) return;
 
     // Scegli una cella libera casuale che non contenga ostacoli
@@ -778,6 +779,12 @@ void APAA_GameMode::SimulateAIPlacement()
     if (UnitsPlaced < 4)
     {
         bIsPlayerTurn = true;
+        if (PlayerUnitIndex == 0) {
+            HUDGame->SetExecutionText("", "SPAWN YOUR SNIPER.", "");
+        }
+        else {
+            HUDGame->SetExecutionText("", "SPAWN YOUR BRAWLER.", "");
+        }
     }
     else
     {

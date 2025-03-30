@@ -171,4 +171,5 @@ public:
 
     UPROPERTY()
     TArray<AUnit*> CurrentAttackableUnits;
+
 };
